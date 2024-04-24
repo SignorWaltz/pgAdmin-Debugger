@@ -1,0 +1,27 @@
+version: '3'
+services:
+  data-pipeline-db:
+    image: data-pipeline-db
+    restart: always
+    container_name: data-pipeline-db
+    # shm_size: 4gb
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - POSTGRES_DB=testing
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+    ports:
+      - "5432:5432"
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "user@mail.com"
+      PGADMIN_DEFAULT_PASSWORD: "password"
+    ports:
+      - "5050:80"
+    depends_on:
+      - data-pipeline-db
+    volumes:
+      - ./shared_folder:/var/lib/pgadmin

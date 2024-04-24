@@ -1,0 +1,3 @@
+SELECT * FROM pg_available_extensions WHERE installed_version IS NOT NULL;
+
+CREATE EXTENSION IF NOT EXISTS pldbgapi;
